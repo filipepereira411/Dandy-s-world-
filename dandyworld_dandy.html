@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dandy's World - Dandy</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at center, #2d7a9c 0%, #164459 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 3px solid rgba(255, 255, 255, 0.25);
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 480px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0 0 0.5rem;
+      text-shadow: 2px 3px 0px #0d2b38;
+      letter-spacing: 1px;
+    }
+
+    .rainbow-bar {
+      height: 8px;
+      width: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #ff595e, #ff924c, #ffca3a, #8ac926, #1982c4, #6a4c93);
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #e6f4f8;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffca3a;
+      color: #164459;
+      font-weight: bold;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Animação do Dandy a espreitar */
+    .peeking-dandy {
+      position: fixed;
+      bottom: -110px;
+      right: 40px;
+      width: 160px;
+      height: 160px;
+      transition: bottom 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .peeking-dandy:hover,
+    .peeking-dandy.active {
+      bottom: -15px;
+    }
+
+    .speech-bubble {
+      position: fixed;
+      bottom: 155px;
+      right: 35px;
+      background: #ffffff;
+      color: #164459;
+      padding: 0.7rem 1.1rem;
+      border-radius: 16px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .peeking-dandy:hover + .speech-bubble,
+    .peeking-dandy.active + .speech-bubble {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <span class="badge">L-001 • Mascote Principal</span>
+    <h1>Dandy</h1>
+    <div class="rainbow-bar"></div>
+    <p>
+      <strong>Nome completo:</strong> Dandicus Dancifer<br>
+      <strong>Papel:</strong> Dono da loja e estrela do Centro Gardenview
+    </p>
+    <p>
+      Ele parece sempre alegre com as suas pétalas arco-íris... mas se ignorares a loja dele vezes demais, o lado <em>Twisted</em> pode aparecer! 👀
+    </p>
+  </div>
+
+  <!-- Ilustração SVG do Dandy a espreitar -->
+  <div class="peeking-dandy active" id="dandy" title="Clica em mim!">
+    <svg viewBox="0 0 200 200" xmlns="http://w3.org">
+      <!-- Pétalas -->
+      <circle cx="100" cy="42" r="28" fill="#ff595e" stroke="#1b1b1b" stroke-width="4"/>
+      <circle cx="150" cy="70" r="28" fill="#ff924c" stroke="#1b1b1b" stroke-width="4"/>
+      <circle cx="150" cy="128" r="28" fill="#ffca3a" stroke="#1b1b1b" stroke-width="4"/>
+      <circle cx="100" cy="156" r="28" fill="#8ac926" stroke="#1b1b1b" stroke-width="4"/>
+      <circle cx="50" cy="128" r="28" fill="#1982c4" stroke="#1b1b1b" stroke-width="4"/>
+      <circle cx="50" cy="70" r="28" fill="#6a4c93" stroke="#1b1b1b" stroke-width="4"/>
+      <!-- Cara -->
+      <circle cx="100" cy="100" r="46" fill="#fcfaf2" stroke="#1b1b1b" stroke-width="4"/>
+      <!-- Bochechas -->
+      <ellipse cx="68" cy="112" rx="9" ry="6" fill="#9be3b0"/>
+      <ellipse cx="132" cy="112" rx="9" ry="6" fill="#9be3b0"/>
+      <!-- Olhos -->
+      <ellipse cx="85" cy="92" rx="11" ry="15" fill="#ffffff" stroke="#1b1b1b" stroke-width="3"/>
+      <circle cx="87" cy="92" r="6" fill="#1b1b1b"/>
+      <circle cx="89" cy="89" r="2" fill="#ffffff"/>
+      <ellipse cx="115" cy="92" rx="11" ry="15" fill="#ffffff" stroke="#1b1b1b" stroke-width="3"/>
+      <circle cx="113" cy="92" r="6" fill="#1b1b1b"/>
+      <circle cx="115" cy="89" r="2" fill="#ffffff"/>
+      <!-- Sorriso -->
+      <path d="M 86 114 Q 100 132 114 114 Z" fill="#e63946" stroke="#1b1b1b" stroke-width="3"/>
+    </svg>
+  </div>
+  <div class="speech-bubble">Estou a espreitar-te! 👀🌼</div>
+
+  <script>
+    const dandy = document.getElementById('dandy');
+    setInterval(() => {
+      dandy.classList.toggle('active');
+    }, 3500);
+  </script>
+
+</body>
+                                                                                                                    </html>
+                                                                                                                    
