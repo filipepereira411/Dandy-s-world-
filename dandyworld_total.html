@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dandy's World — Enciclopédia Total (44 Toons)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1f566e 0%, #0d2530 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+    }
+
+    header {
+      background: rgba(11, 31, 41, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #ffca3a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #ff595e, #ffca3a, #8ac926, #1982c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ffca3a;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin: 0 0 0.5rem;
+      text-shadow: 2px 4px 0px #081820;
+    }
+
+    .rainbow-bar {
+      height: 6px;
+      max-width: 340px;
+      margin: 1rem auto 1.5rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff595e, #ff924c, #ffca3a, #8ac926, #1982c4, #6a4c93);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #d3ebf5;
+      line-height: 1.6;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 5rem;
+    }
+
+    /* Mecânicas */
+    .mechanics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .mech-card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+
+    .mech-card h3 {
+      margin: 0 0 0.5rem;
+      color: #ffca3a;
+      font-size: 1.15rem;
+    }
+
+    .mech-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: #d0e8f2;
+      line-height: 1.5;
+    }
+
+    /* Filtros e Pesquisa */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1rem;
+      border-radius: 16px;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: #ffca3a;
+      color: #0d2530;
+      border-color: #ffca3a;
+    }
+
+    .search-box {
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 0.95rem;
+      min-width: 240px;
+    }
+
+    .search-box::placeholder {
+      color: #a9cad8;
+    }
+
+    /* Grelha de Toons */
+    .toons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .toon-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .toon-card:hover {
+      transform: translateY(-4px);
+      border-color: #ffca3a;
+    }
+
+    .toon-card.lethal {
+      border-color: rgba(255, 89, 94, 0.5);
+      background: rgba(255, 89, 94, 0.1);
+    }
+
+    .toon-card.main {
+      border-color: rgba(255, 202, 58, 0.5);
+    }
+
+    .toon-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .toon-emoji {
+      font-size: 2.2rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .badge-main { background: #ffca3a; color: #0d2530; }
+    .badge-regular { background: #1982c4; color: #ffffff; }
+    .badge-event { background: #8ac926; color: #0d2530; }
+    .badge-lethal { background: #ff595e; color: #ffffff; }
+
+    .toon-card h3 {
+      margin: 0.25rem 0;
+      font-size: 1.25rem;
+    }
+
+    .toon-desc {
+      font-size: 0.88rem;
+      color: #cfe8f3;
+      line-height: 1.45;
+      margin: 0.4rem 0 0.8rem;
+    }
+
+    .toon-meta {
+      font-size: 0.8rem;
+      color: #9ec4d4;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .link-dandy {
+      display: inline-block;
+      margin-top: 0.75rem;
+      text-align: center;
+      background: #ffca3a;
+      color: #0d2530;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.85rem;
+      padding: 0.45rem;
+      border-radius: 8px;
+    }
+
+    /* Dandy a espreitar */
+    .peeking-dandy {
+      position: fixed;
+      bottom: -95px;
+      right: 25px;
+      width: 120px;
+      height: 120px;
+      transition: bottom 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      z-index: 99;
+    }
+
+    .peeking-dandy:hover,
+    .peeking-dandy.active {
+      bottom: -10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #8fb3c2;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🌼 DANDY'S WORLD TOTAL</div>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="#mecanicas">Como Jogar</a>
+      <a href="#catalogo">Todos os 44 Toons</a>
+      <a href="dandyworld_dandy.html">Espreitar o Dandy 👀</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Guia Total de Dandy's World</h1>
+    <div class="rainbow-bar"></div>
+    <p>
+      Explora o Centro Gardenview criado por Arthur Walton e Delilah Keen. Aqui encontras todos os <strong>44 Toons</strong> (Iniciais, Regulares, Principais, Eventos e Letais) e as regras essenciais para sobreviver aos andares!
+    </p>
+    <div class="stats-bar">
+      <span class="stat-pill">🎭 40 Toons Jogáveis</span>
+      <span class="stat-pill">⚠️ 4 Toons Letais (Devs)</span>
+      <span class="stat-pill">⭐ 15 a 16 Estrelas de Stats</span>
+      <span class="stat-pill">🖤 Objetivo: Extrair Ichor</span>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="mecanicas">
+      <h2>⚙️ Mecânicas Principais do Jogo</h2>
+      <div class="mechanics-grid">
+        <div class="mech-card">
+          <h3>🖤 Máquinas de Ichor</h3>
+          <p>Completa os testes de perícia (<em>Skill Checks</em>) para encher cada máquina. Quando todas estiverem prontas, corre para o elevador!</p>
+        </div>
+        <div class="mech-card">
+          <h3>👁️ Twisteds</h3>
+          <p>Versões corrompidas dos Toons que patrulham os andares. Recolhe cápsulas de pesquisa (<em>Research</em>) para desbloquear novos personagens.</p>
+        </div>
+        <div class="mech-card">
+          <h3>🛒 Loja do Dandy</h3>
+          <p>Aparece entre andares pares para vender itens em troca de <em>Tapes</em>. Se o ignorares vezes demais, ele transforma-se em Twisted Dandy.</p>
+        </div>
+        <div class="mech-card">
+          <h3>📊 5 Atributos (Stats)</h3>
+          <p>Cada Toon distribui estrelas por: <strong>Skill Check</strong>, <strong>Velocidade</strong>, <strong>Stamina</strong>, <strong>Furtividade (Stealth)</strong> e <strong>Extração</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo">
+      <h2>📚 Catálogo Completo de Toons (<span id="count">44</span>)</h2>
+
+      <div class="controls">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todos (44)</button>
+          <button class="filter-btn" data-filter="main">Principais (8)</button>
+          <button class="filter-btn" data-filter="regular">Regulares (23)</button>
+          <button class="filter-btn" data-filter="event">Eventos (9)</button>
+          <button class="filter-btn" data-filter="lethal">Letais (4)</button>
+        </div>
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Procurar Toon (ex: Astro, Vee, Shrimpo)...">
+      </div>
+
+      <div class="toons-grid" id="toonsGrid"></div>
+    </section>
+  </main>
+
+  <!-- Dandy a espreitar -->
+  <div class="peeking-dandy active" id="dandy" title="Estou a espreitar!">
+    <svg viewBox="0 0 200 200" xmlns="http://w3.org">
+      <circle cx="100" cy="42" r="28" fill="#ff595e" stroke="#1b1b1b" stroke-width="4"/>
+      <circle cx="150" cy="70" r="28" fill="#ff924c" stroke="#1b1b1b" stroke-width="4"/>
